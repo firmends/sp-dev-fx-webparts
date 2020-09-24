@@ -3,7 +3,7 @@
   "solution": {
     "name": "react-carousel",
     "id": "263a1d21-f4c7-4a46-a364-e5f995286b9b",
-    "version": "2.5.1.0",
+    "version": "2.6.0.0",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false
