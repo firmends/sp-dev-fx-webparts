@@ -6,6 +6,8 @@ export interface ICarouselProps {
   list: string;
   context: WebPartContext;
   numberImages: number;
+  sliderDelay: number;
+  includeCaption: boolean;
   updateProperty: (value: string) => void;
   displayMode: DisplayMode;
 }

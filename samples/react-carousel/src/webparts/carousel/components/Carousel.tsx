@@ -2,18 +2,16 @@ import * as React from 'react';
 import styles from './Carousel.module.scss';
 import { ICarouselProps } from './ICarouselProps';
 import { ICarouselState } from './ICarouselState';
-import { escape } from '@microsoft/sp-lodash-subset';
 import spservices from '../../../spservices/spservices';
 import * as microsoftTeams from '@microsoft/teams-js';
 import { ICarouselImages } from './ICarouselmages';
 import 'video-react/dist/video-react.css'; // import css
-import { Player, BigPlayButton } from 'video-react';
-import Slider from "react-slick";
+import  { Player, BigPlayButton } from 'video-react';
+import  Slider, { LazyLoadTypes } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import * as $ from 'jquery';
 import { FontSizes, } from '@uifabric/fluent-theme/lib/fluent/FluentType';
-import { WebPartTitle } from "@pnp/spfx-controls-react/lib/WebPartTitle";
 import { Placeholder } from "@pnp/spfx-controls-react/lib/Placeholder";
 import * as strings from 'CarouselWebPartStrings';
 import { DisplayMode } from '@microsoft/sp-core-library';
@@ -25,9 +23,9 @@ import {
   MessageBarType,
   Label,
   Icon,
-  ImageFit,
   Image,
-  ImageLoadState,
+  ImageLoadState, 
+  ImageFit
 } from 'office-ui-fabric-react';
 
 
@@ -93,7 +91,6 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
             break;
           default:
             continue;
-            break;
         }
 
         galleryImages.push(
@@ -133,13 +130,15 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
                       }
                     }}
                     height={'400px'}
-                    imageFit={ImageFit.cover}
+                    imageFit={ImageFit.centerContain}
                   />
-                  <div style={{ background: 'rgba(0, 0, 0, 0.3)',overflow:'hidden', fontSize: FontSizes.size16, top:0, transition: '.7s ease', textAlign: 'left', width: '200px', height: '350px', position: 'absolute', color: '#ffffff', padding: '25px' }}>
+                  {this.props.includeCaption == true ?
+                   <div className={styles.caption}>
                     <h2 style={{fontSize: FontSizes.size20, textTransform: 'uppercase', color: 'white' }}>{galleryImage.caption}</h2>
                     <p>{galleryImage.description}</p>
                   </div>
-
+                  :
+                  ''}
                 </div>
               }
             </div>
@@ -162,7 +161,10 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
 
     if (!this.props.list || !this.props.siteUrl) return;
     // Get  Properties change
-    if (prevProps.list !== this.props.list || prevProps.numberImages !== this.props.numberImages) {
+    if (prevProps.list !== this.props.list 
+      || prevProps.numberImages !== this.props.numberImages 
+      || prevProps.includeCaption !== this.props.includeCaption)
+    {
       /*
        this.galleryImages = [];
        this._carouselImages = [];
@@ -172,15 +174,17 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
     }
   }
   public render(): React.ReactElement<ICarouselProps> {
+    const sliderDelayValue = this.props.sliderDelay * 1000;
+    const lazyLoad: LazyLoadTypes = "progressive";
     const sliderSettings = {
       dots: false,
       infinite: true,
-      speed: 500,
+      speed: 1000,
       slidesToShow: 1,
       slidesToScroll: 1,
-      lazyLoad: 'progressive',
-      autoplaySpeed: 3000,
+      autoplaySpeed: sliderDelayValue,
       initialSlide: this.state.photoIndex,
+      lazyLoad: lazyLoad,
       arrows: false,
       draggable: true,
       adaptiveHeight: true,

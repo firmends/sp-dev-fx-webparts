@@ -2,16 +2,9 @@
 // March 2019
 
 import { WebPartContext } from "@microsoft/sp-webpart-base";
-import { sp, Fields, Web, SearchResults, Field, PermissionKind, RegionalSettings, PagedItemCollection } from '@pnp/sp';
+import { sp, Web } from '@pnp/sp';
 import { graph, } from "@pnp/graph";
-import { SPHttpClient, SPHttpClientResponse, ISPHttpClientOptions, HttpClient, MSGraphClient } from '@microsoft/sp-http';
-import * as $ from 'jquery';
-
-import { registerDefaultFontFaces } from "@uifabric/styling";
-import * as moment from 'moment';
-import { SiteUser } from "@pnp/sp/src/siteusers";
-import { dateAdd } from "@pnp/common";
-import { escape, update } from '@microsoft/sp-lodash-subset';
+import { MSGraphClient } from '@microsoft/sp-http';
 
 
 // Class Services

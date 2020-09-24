@@ -9,7 +9,8 @@ import {
   PropertyPaneTextField,
   PropertyPaneDropdown,
   IPropertyPaneDropdownOption,
-  PropertyPaneLabel
+  PropertyPaneLabel,
+  PropertyPaneToggle
 } from '@microsoft/sp-property-pane';
 
 import * as strings from 'CarouselWebPartStrings';
@@ -17,6 +18,7 @@ import Carousel from './components/Carousel';
 import { ICarouselProps } from './components/ICarouselProps';
 import spservices from '../../spservices/spservices';
 import { PropertyFieldNumber } from '@pnp/spfx-property-controls/lib/PropertyFieldNumber';
+import { ImageFit } from 'office-ui-fabric-react';
 
 export interface ICarouselWebPartProps {
   title: string;
@@ -24,6 +26,8 @@ export interface ICarouselWebPartProps {
   list: string;
   errorMessage: string;
   numberImages: number;
+  includeCaption: boolean;
+  sliderDelay: number;
 
 }
 
@@ -144,6 +148,8 @@ export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebP
         siteUrl: this.properties.siteUrl,
         list: this.properties.list,
         numberImages: this.properties.numberImages,
+        includeCaption: this.properties.includeCaption,
+        sliderDelay: this.properties.sliderDelay,
         context: this.context,
         displayMode: this.displayMode,
         updateProperty: (value: string) => {
@@ -159,11 +165,17 @@ export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebP
     ReactDom.unmountComponentAtNode(this.domElement);
   }
 
-  protected get dataVersion(): Version {
-    return Version.parse('1.0');
-  }
+  //protected get dataVersion(): Version {
+  //  return Version.parse('1.0');
+  //}
 
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
+    if (this.properties.includeCaption) {
+      this.properties.includeCaption = true;
+    }
+    else {
+      this.properties.includeCaption = false;
+    }
     return {
       pages: [
         {
@@ -189,7 +201,7 @@ export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebP
                   options: this.lists,
                   disabled: this.listsDropdownDisabled,
                 }),
-                PropertyFieldNumber("numberImages", {
+                PropertyFieldNumber('numberImages', {
                   key: "numberValue",
                   label: "Number of images to load",
                   description: "Number between 1 and 250",
@@ -197,6 +209,18 @@ export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebP
                   maxValue: 250,
                   minValue: 1,
                   disabled: false
+                }),
+                PropertyFieldNumber('sliderDelay', {
+                  key: "delayValue",
+                  label: "Delay in seconds until next image displays",
+                  description: "Number between 1 and 60",
+                  value: this.properties.sliderDelay,
+                  maxValue: 60,
+                  minValue: 1,
+                  disabled: false
+                }),
+                PropertyPaneToggle('includeCaption', {
+                  label: "Include Caption"
                 }),
                 PropertyPaneLabel('errorMessage', {
                   text:  this.errorMessage,

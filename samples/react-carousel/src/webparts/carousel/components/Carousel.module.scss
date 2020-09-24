@@ -71,4 +71,19 @@
       display: inline-block;
     }
   }
+
+  .caption {
+    background: $ms-color-themeDark;
+    overflow: hidden;
+    font-size: 16;
+    top:0;
+    transition: .7s ease;
+    text-align: left; 
+    width: 200px;
+    height: 350px; 
+    position: absolute; 
+    color: $ms-color-white; 
+    padding: 25px; 
+    opacity: .9;
+  }
 }

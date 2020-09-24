@@ -24,6 +24,7 @@
       "title": "Image Gallery",
         "siteUrl": "",
         "list": "",
+        "sliderDelay": 7,
         "numberImages": 50
     }
   }]
