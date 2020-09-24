@@ -28,6 +28,7 @@ export interface ICarouselWebPartProps {
   numberImages: number;
   includeCaption: boolean;
   sliderDelay: number;
+  imageFitStyle: ImageFit;
 
 }
 
@@ -49,6 +50,10 @@ export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebP
       this.lists = _lists;
       this.properties.list = this.lists[0].key.toString();
      }
+    }
+    // default imageFitStyle option the first time web part is added to the page
+    if (!this.properties.imageFitStyle) {
+      this.properties.imageFitStyle = ImageFit.center;
     }
 
     return Promise.resolve();
@@ -150,6 +155,7 @@ export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebP
         numberImages: this.properties.numberImages,
         includeCaption: this.properties.includeCaption,
         sliderDelay: this.properties.sliderDelay,
+        imageFitStyle: this.properties.imageFitStyle,
         context: this.context,
         displayMode: this.displayMode,
         updateProperty: (value: string) => {
@@ -218,6 +224,18 @@ export default class CarouselWebPart extends BaseClientSideWebPart<ICarouselWebP
                   maxValue: 60,
                   minValue: 1,
                   disabled: false
+                }),
+                PropertyPaneDropdown('imageFitStyle', {
+                  options: [
+                    {key: ImageFit.center, text: "center"}, 
+                    {key: ImageFit.centerContain, text: "centerContain"},
+                    {key: ImageFit.centerCover, text: "centerCover"},
+                    {key: ImageFit.contain, text: "contain"},
+                    {key: ImageFit.cover, text: "cover"},
+                    {key: ImageFit.none, text: "None"}
+                  ],
+                  label: "Image Fit Option",
+                  selectedKey: this.properties.imageFitStyle
                 }),
                 PropertyPaneToggle('includeCaption', {
                   label: "Include Caption"

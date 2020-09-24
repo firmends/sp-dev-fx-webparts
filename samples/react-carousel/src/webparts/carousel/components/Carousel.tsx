@@ -130,7 +130,7 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
                       }
                     }}
                     height={'400px'}
-                    imageFit={ImageFit.centerContain}
+                    imageFit={this.props.imageFitStyle}
                   />
                   {this.props.includeCaption == true ?
                    <div className={styles.caption}>
@@ -163,7 +163,8 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
     // Get  Properties change
     if (prevProps.list !== this.props.list 
       || prevProps.numberImages !== this.props.numberImages 
-      || prevProps.includeCaption !== this.props.includeCaption)
+      || prevProps.includeCaption !== this.props.includeCaption
+      || prevProps.imageFitStyle !== this.props.imageFitStyle)
     {
       /*
        this.galleryImages = [];
