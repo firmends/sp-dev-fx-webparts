@@ -1,3 +1,4 @@
+import { ImageFit } from 'office-ui-fabric-react';
 import { ICarouselImages } from './ICarouselmages';
 export interface ICarouselState {
   carouselImages: any[];
