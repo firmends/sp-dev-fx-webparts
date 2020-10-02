@@ -2,14 +2,13 @@ import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
 import {
-  BaseClientSideWebPart,
-  IPropertyPaneConfiguration,
-  PropertyPaneTextField
+  BaseClientSideWebPart
 } from '@microsoft/sp-webpart-base';
 import { sp } from "@pnp/sp";
 import * as strings from 'HooksWebPartStrings';
 import Hooks from './components/Hooks';
 import { IHooksProps } from './components/IHooksProps';
+import { PropertyPaneTextField, IPropertyPaneConfiguration } from '@microsoft/sp-property-pane';
 
 export interface IHooksWebPartProps {
   description: string;
