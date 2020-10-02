@@ -2,11 +2,11 @@ import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
 import {
-  BaseClientSideWebPart,
-  IPropertyPaneConfiguration,
-  PropertyPaneTextField
+  BaseClientSideWebPart
 } from '@microsoft/sp-webpart-base';
-
+import { 
+  IPropertyPaneConfiguration,
+  PropertyPaneTextField } from '@microsoft/sp-property-pane';
 import * as strings from 'TelephonedirectoryWebPartStrings';
 import Telephonedirectory from './components/Telephonedirectory';
 import { ITelephoneDirectoryProps } from './components/ITelephonedirectoryProps';
